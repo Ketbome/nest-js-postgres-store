@@ -20,7 +20,7 @@ export class Customer {
   @Column({ type: 'varchar', length: 255 })
   lastName: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, unique: true })
   phone: string;
 
   @OneToOne(() => User, (user) => user.customer, { nullable: true })
