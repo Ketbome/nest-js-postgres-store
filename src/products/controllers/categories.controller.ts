@@ -45,4 +45,12 @@ export class CategoriesController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.categoriesService.remove(+id);
   }
+
+  @Get(':categoryId/product/:productId')
+  addCategoryToProduct(
+    @Param('categoryId', ParseIntPipe) categoryId: number,
+    @Param('productId', ParseIntPipe) productId: number,
+  ) {
+    return this.categoriesService.addCategoryToProduct(categoryId, productId);
+  }
 }

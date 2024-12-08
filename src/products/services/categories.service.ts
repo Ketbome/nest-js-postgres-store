@@ -4,11 +4,13 @@ import { Category } from '../entities/category.entity';
 import { CreateCategoryDto, UpdateCategoryDto } from '../dtos/category.dtos';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Product } from '../entities/product.entity';
 
 @Injectable()
 export class CategoriesService {
   constructor(
     @InjectRepository(Category) private categoryRepo: Repository<Category>,
+    @InjectRepository(Product) private productRepo: Repository<Product>,
   ) {}
 
   async findAll() {
@@ -49,5 +51,23 @@ export class CategoriesService {
     }
     await this.categoryRepo.remove(category);
     return true;
+  }
+
+  async addCategoryToProduct(categoryId: number, productId: number) {
+    const category = await this.categoryRepo.findOne({
+      where: { id: categoryId },
+    });
+    const product = await this.productRepo.findOne({
+      where: { id: productId },
+      relations: ['categories'],
+    });
+    if (!category || !product) {
+      throw new NotFoundException('Category or Product not found');
+    }
+    if (!product.categories) {
+      product.categories = [category];
+    }
+    product.categories.push(category);
+    return await this.productRepo.save(product);
   }
 }

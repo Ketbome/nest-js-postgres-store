@@ -15,6 +15,7 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
 import { CreateProductDto, UpdateProductDto } from '../dtos/products.dtos';
 import { ProductsService } from './../services/products.service';
+import { Filter } from 'typeorm';
 
 @ApiTags('products')
 @Controller('products')
@@ -61,5 +62,14 @@ export class ProductsController {
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: string) {
     return this.productsService.remove(+id);
+  }
+
+  @HttpCode(HttpStatus.ACCEPTED)
+  @Get(':productId/category/:categoryId')
+  getCategory(
+    @Param('productId', ParseIntPipe) productId: number,
+    @Param('categoryId', ParseIntPipe) categoryId: number,
+  ) {
+    return this.productsService.removeCategoryByProduct(productId, categoryId);
   }
 }

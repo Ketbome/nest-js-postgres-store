@@ -77,4 +77,15 @@ export class ProductsService {
     await this.productRepo.remove(product);
     return true;
   }
+
+  async removeCategoryByProduct(productId: number, categoryId: number) {
+    const product = await this.productRepo.findOne({
+      where: { id: productId },
+      relations: ['categories'],
+    });
+    product.categories = product.categories.filter(
+      (item) => item.id !== categoryId,
+    );
+    return await this.productRepo.save(product);
+  }
 }
