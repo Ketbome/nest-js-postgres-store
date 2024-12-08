@@ -1,18 +1,26 @@
 import { User } from './user.entity';
 import { Product } from './../../products/entities/product.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Order {
+  @PrimaryColumn()
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'date' })
   date: Date;
 
-  @Column({ type: 'int' })
+  @OneToOne(() => User, (user) => user.id)
   user: User;
 
-  @Column({ type: 'int' })
+  @OneToMany(() => Product, (product) => product.id)
   products: Product[];
 }
