@@ -7,12 +7,13 @@ import { Order } from '../entities/order.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 import { ProductsService } from './../../products/services/products.service';
 import { Customer } from '../entities/customer.entity';
+import { CustomersService } from './customers.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private userRepo: Repository<User>,
-    @InjectRepository(Customer) private customerRepo: Repository<Customer>,
+    private customersService: CustomersService,
   ) {}
 
   async findAll() {
@@ -32,9 +33,7 @@ export class UsersService {
   async create(data: CreateUserDto) {
     const newUser = this.userRepo.create(data);
     if (data.customerId) {
-      const customer = await this.customerRepo.findOneBy({
-        id: data.customerId,
-      });
+      const customer = await this.customersService.findOne(data.customerId);
       newUser.customer = customer;
     }
     return await this.userRepo.save(newUser);
@@ -44,6 +43,10 @@ export class UsersService {
     const user = await this.findOne(id);
     if (!user) {
       throw new NotFoundException(`User #${id} not found`);
+    }
+    if (changes.customerId) {
+      const customer = await this.customersService.findOne(changes.customerId);
+      user.customer = customer;
     }
     this.userRepo.merge(user, changes);
     return this.userRepo.save(user);
