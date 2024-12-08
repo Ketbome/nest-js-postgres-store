@@ -1,31 +1,30 @@
-import { User } from './user.entity';
-import { Product } from './../../products/entities/product.entity';
+import { IsNumber } from 'class-validator';
+import { Product } from 'src/products/entities/product.entity';
 import {
-  Column,
   Entity,
-  JoinColumn,
-  OneToMany,
-  OneToOne,
   PrimaryColumn,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  Column,
   ManyToOne,
 } from 'typeorm';
-import { Customer } from './customer.entity';
-import { OrderItem } from './order-item.entity';
+import { Order } from './order.entity';
 
 @Entity()
-export class Order {
+export class OrderItem {
   @PrimaryColumn()
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Customer, (customer) => customer.id)
-  customer: Customer;
+  @Column({ type: 'int' })
+  quantity: number;
 
-  @OneToMany(() => OrderItem, (item) => item.order)
-  orderItems: OrderItem[];
+  @ManyToOne(() => Product, (product) => product.id)
+  product: Product;
+
+  @ManyToOne(() => Order, (order) => order.id)
+  order: Order;
 
   @CreateDateColumn({
     type: 'timestamptz',
