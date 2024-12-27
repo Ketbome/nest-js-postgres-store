@@ -8,8 +8,11 @@ import {
   IsOptional,
   Min,
   ValidateIf,
+  Validate,
+
 } from 'class-validator';
 import { PartialType, ApiProperty } from '@nestjs/swagger';
+import { CustomMaxPriceValidator } from 'src/common/price.validator';
 
 export class CreateProductDto {
   @IsString()
@@ -65,6 +68,6 @@ export class FilterProductsDto {
   readonly minPrice: number;
 
   @ValidateIf((item) => item.minPrice)
-  @IsPositive()
+  @Validate(CustomMaxPriceValidator)
   readonly maxPrice: number;
 }
