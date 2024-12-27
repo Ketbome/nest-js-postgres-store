@@ -25,7 +25,7 @@ export class Order {
   customer: Customer;
 
   @OneToMany(() => OrderItem, (item) => item.order)
-  orderItems: OrderItem[];
+  items: OrderItem[];
 
   @CreateDateColumn({
     type: 'timestamptz',
