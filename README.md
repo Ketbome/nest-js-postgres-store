@@ -45,6 +45,15 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Migrations
+
+```bash
+npm run migrations:generate ./src/database/migrations/{name migration}
+
+# example migration of product entity index
+npm run migrations:generate ./src/database/migrations/index-product
+```
+
 ## Test
 
 ```bash
