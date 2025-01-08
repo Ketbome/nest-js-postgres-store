@@ -1,4 +1,3 @@
-import { IsNumber } from 'class-validator';
 import { Product } from 'src/products/entities/product.entity';
 import {
   Entity,
@@ -11,6 +10,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Order } from './order.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class OrderItem {
@@ -29,6 +29,7 @@ export class OrderItem {
   @JoinColumn({ name: 'order_id' })
   order: Order;
 
+  @Exclude()
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamptz',
@@ -36,6 +37,7 @@ export class OrderItem {
   })
   createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({
     name: 'updated_at',
     type: 'timestamptz',

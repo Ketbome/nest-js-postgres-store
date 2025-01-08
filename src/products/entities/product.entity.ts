@@ -13,6 +13,7 @@ import {
 } from 'typeorm';
 import { Brand } from './brand.entity';
 import { Category } from './category.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'products' })
 @Index(['stock', 'price']) // Multiple column index
@@ -49,6 +50,7 @@ export class Product {
   })
   categories: Category[];
 
+  @Exclude()
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamptz',
@@ -56,6 +58,7 @@ export class Product {
   })
   createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({
     name: 'updated_at',
     type: 'timestamptz',
