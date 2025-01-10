@@ -7,8 +7,11 @@ import {
   UpdateDateColumn,
   OneToOne,
   JoinColumn,
+  BeforeUpdate,
+  BeforeInsert,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import * as bcrypt from 'bcrypt';
 
 import { Customer } from './customer.entity';
 
@@ -24,6 +27,7 @@ export class User {
   @Column({ type: 'varchar', length: 15, unique: true })
   rut: string;
 
+  //@Exclude()
   @Column({ type: 'varchar', length: 255 })
   password: string; // encrypt
 
@@ -51,4 +55,11 @@ export class User {
     default: () => 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPassword() {
+    if (!this.password) return;
+    this.password = await bcrypt.hash(this.password, 10);
+  }
 }

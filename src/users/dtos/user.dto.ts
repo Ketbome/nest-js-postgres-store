@@ -4,6 +4,7 @@ import {
   IsEmail,
   Length,
   IsPositive,
+  IsOptional,
 } from 'class-validator';
 import { PartialType, ApiProperty } from '@nestjs/swagger';
 
@@ -28,6 +29,7 @@ export class CreateUserDto {
   @ApiProperty({ description: 'the role of user' })
   readonly role: string;
 
+  @IsOptional()
   @IsPositive()
   @ApiProperty({ description: 'the id of customer' })
   readonly customerId: number;

@@ -29,27 +29,35 @@ export class UsersService {
   }
 
   async create(data: CreateUserDto) {
-    const newUser = this.userRepo.create(data);
-    const hashPassword = await bcrypt.hash(newUser.password, 10);
-    newUser.password = hashPassword;
-    if (data.customerId) {
-      const customer = await this.customersService.findOne(data.customerId);
-      newUser.customer = customer;
+    try {
+      const newUser = this.userRepo.create(data);
+      if (data.customerId) {
+        const customer = await this.customersService.findOne(data.customerId);
+        newUser.customer = customer;
+      }
+      return await this.userRepo.save(newUser);
+    } catch (error) {
+      throw new Error(error.message);
     }
-    return await this.userRepo.save(newUser);
   }
 
   async update(id: number, changes: UpdateUserDto) {
-    const user = await this.findOne(id);
-    if (!user) {
-      throw new NotFoundException(`User #${id} not found`);
+    try {
+      const user = await this.findOne(id);
+      if (!user) {
+        throw new NotFoundException(`User #${id} not found`);
+      }
+      if (changes.customerId) {
+        const customer = await this.customersService.findOne(
+          changes.customerId,
+        );
+        user.customer = customer;
+      }
+      this.userRepo.merge(user, changes);
+      return this.userRepo.save(user);
+    } catch (error) {
+      throw new Error(error.message);
     }
-    if (changes.customerId) {
-      const customer = await this.customersService.findOne(changes.customerId);
-      user.customer = customer;
-    }
-    this.userRepo.merge(user, changes);
-    return this.userRepo.save(user);
   }
 
   async remove(id: number) {
