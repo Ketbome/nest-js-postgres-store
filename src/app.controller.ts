@@ -2,7 +2,9 @@ import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ApiKeyGuard } from './auth/guards/api-key.guard';
 import { Public } from './auth/decorators/public.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('app')
 @UseGuards(ApiKeyGuard)
 @Controller()
 export class AppController {
@@ -13,8 +15,8 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('/bye/')
   @Public()
+  @Get('bye')
   getBye(): string {
     return this.appService.getBye();
   }
