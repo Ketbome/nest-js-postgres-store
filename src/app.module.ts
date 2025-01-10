@@ -29,6 +29,7 @@ import config from './config';
         TYPEORM_ENTITIES: Joi.string().required(),
         TYPEORM_MIGRATIONS: Joi.string().required(),
         TYPEORM_MIGRATIONS_TABLE_NAME: Joi.string().required(),
+        API_KEY: Joi.string().required(),
       }),
     }),
     HttpModule,
