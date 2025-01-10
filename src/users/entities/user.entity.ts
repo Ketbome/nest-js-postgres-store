@@ -27,7 +27,7 @@ export class User {
   @Column({ type: 'varchar', length: 15, unique: true })
   rut: string;
 
-  //@Exclude()
+  @Exclude()
   @Column({ type: 'varchar', length: 255 })
   password: string; // encrypt
 
