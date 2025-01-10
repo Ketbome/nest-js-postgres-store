@@ -7,7 +7,7 @@ import { CreateBrandDto, UpdateBrandDto } from '../dtos/brand.dtos';
 
 @Injectable()
 export class BrandsService {
-  constructor(@InjectRepository(Brand) private brandRepo: Repository<Brand>) {}
+  constructor(@InjectRepository(Brand) private readonly brandRepo: Repository<Brand>) {}
 
   async findAll() {
     return await this.brandRepo.find();

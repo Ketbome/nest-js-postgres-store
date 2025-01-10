@@ -16,7 +16,7 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('customers')
 @Controller('customers')
 export class CustomerController {
-  constructor(private customersService: CustomersService) {}
+  constructor(private readonly customersService: CustomersService) {}
 
   @Get()
   findAll() {

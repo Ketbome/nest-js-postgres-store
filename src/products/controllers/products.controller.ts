@@ -13,20 +13,21 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
-import { CreateProductDto, FilterProductsDto, UpdateProductDto } from '../dtos/products.dtos';
+import {
+  CreateProductDto,
+  FilterProductsDto,
+  UpdateProductDto,
+} from '../dtos/products.dtos';
 import { ProductsService } from './../services/products.service';
-import { Filter } from 'typeorm';
 
 @ApiTags('products')
 @Controller('products')
 export class ProductsController {
-  constructor(private productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) {}
 
   @Get()
   @ApiOperation({ summary: 'List of products' })
-  getProducts(
-    @Query() params?: FilterProductsDto
-  ) {
+  getProducts(@Query() params?: FilterProductsDto) {
     return this.productsService.findAll(params);
   }
 

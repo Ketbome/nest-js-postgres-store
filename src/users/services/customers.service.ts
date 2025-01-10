@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class CustomersService {
   constructor(
-    @InjectRepository(Customer) private customerRepo: Repository<Customer>,
+    @InjectRepository(Customer) private readonly customerRepo: Repository<Customer>,
   ) {}
 
   async findAll() {

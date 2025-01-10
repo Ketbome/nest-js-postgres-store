@@ -6,7 +6,7 @@ import { CreateOrderItemDto } from '../dtos/order-item.dto';
 @ApiTags('order-item')
 @Controller('order-item')
 export class OrderItemController {
-  constructor(private orderItemService: OrderItemService) {}
+  constructor(private readonly orderItemService: OrderItemService) {}
 
   @Post()
   create(@Body() payload: CreateOrderItemDto) {

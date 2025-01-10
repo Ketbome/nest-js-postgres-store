@@ -15,7 +15,7 @@ import { CreateOrderDto } from '../dtos/order.dto';
 @ApiTags('orders')
 @Controller('orders')
 export class OrdersController {
-  constructor(private orderService: OrdersService) {}
+  constructor(private readonly orderService: OrdersService) {}
 
   @Get()
   findAll() {

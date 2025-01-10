@@ -8,8 +8,8 @@ import { Customer } from '../entities/customer.entity';
 @Injectable()
 export class OrdersService {
   constructor(
-    @InjectRepository(Order) private orderRepo: Repository<Order>,
-    @InjectRepository(Customer) private customerRepo: Repository<Customer>,
+    @InjectRepository(Order) private readonly orderRepo: Repository<Order>,
+    @InjectRepository(Customer) private readonly customerRepo: Repository<Customer>,
   ) {}
 
   async findAll() {

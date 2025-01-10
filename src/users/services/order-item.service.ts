@@ -10,9 +10,11 @@ import { Product } from 'src/products/entities/product.entity';
 @Injectable()
 export class OrderItemService {
   constructor(
-    @InjectRepository(OrderItem) private orderItemRepo: Repository<OrderItem>,
-    @InjectRepository(Order) private orderRepo: Repository<Order>,
-    @InjectRepository(Product) private productRepo: Repository<Product>,
+    @InjectRepository(OrderItem)
+    private readonly orderItemRepo: Repository<OrderItem>,
+    @InjectRepository(Order) private readonly orderRepo: Repository<Order>,
+    @InjectRepository(Product)
+    private readonly productRepo: Repository<Product>,
   ) {}
 
   async create(data: CreateOrderItemDto) {

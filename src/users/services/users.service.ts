@@ -1,19 +1,17 @@
-import { Injectable, NotFoundException, Inject } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
 
 import { User } from '../entities/user.entity';
-import { Order } from '../entities/order.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
-import { ProductsService } from './../../products/services/products.service';
-import { Customer } from '../entities/customer.entity';
 import { CustomersService } from './customers.service';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private userRepo: Repository<User>,
-    private customersService: CustomersService,
+    @InjectRepository(User) private readonly userRepo: Repository<User>,
+    private readonly customersService: CustomersService,
   ) {}
 
   async findAll() {

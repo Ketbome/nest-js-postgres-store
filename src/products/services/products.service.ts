@@ -1,6 +1,6 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, Condition, FindOptionsWhere, In, Repository } from 'typeorm';
+import { Between, FindOptionsWhere, In, Repository } from 'typeorm';
 
 import { Product } from './../entities/product.entity';
 import {
@@ -14,9 +14,11 @@ import { Brand } from '../entities/brand.entity';
 @Injectable()
 export class ProductsService {
   constructor(
-    @InjectRepository(Product) private productRepo: Repository<Product>,
-    @InjectRepository(Category) private categoryRepo: Repository<Category>,
-    @InjectRepository(Brand) private brandRepo: Repository<Brand>,
+    @InjectRepository(Product)
+    private readonly productRepo: Repository<Product>,
+    @InjectRepository(Category)
+    private readonly categoryRepo: Repository<Category>,
+    @InjectRepository(Brand) private readonly brandRepo: Repository<Brand>,
   ) {}
 
   async findAll(params?: FilterProductsDto) {
