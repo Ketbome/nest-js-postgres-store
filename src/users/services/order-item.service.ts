@@ -29,6 +29,9 @@ export class OrderItemService {
       const product = await this.productRepo.findOne({
         where: { id: data.productId },
       });
+      if (!product) {
+        throw new NotFoundException(`Product #${data.productId} not found`);
+      }
       newOrderItem.product = product;
     }
     newOrderItem.quantity = data.quantity;

@@ -47,7 +47,7 @@ export class Order {
   get products() {
     if (this.items) {
       return this.items
-        .filter((item) => !!item)
+        .filter((item) => !!item && !!item.product)
         .map((item) => ({
           ...item.product,
           quantity: item.quantity,
@@ -61,7 +61,7 @@ export class Order {
   get total() {
     if (this.items) {
       return this.items
-        .filter((item) => !!item)
+        .filter((item) => !!item && !!item.product)
         .reduce((total, item) => {
           const totalItem = item.product.price * item.quantity;
           return total + totalItem;
