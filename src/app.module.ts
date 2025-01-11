@@ -10,8 +10,7 @@ import { ProductsModule } from './products/products.module';
 import { DatabaseModule } from './database/database.module';
 import { enviroments } from './enviroments';
 import config from './config';
-import { APP_GUARD } from '@nestjs/core';
-import { ApiKeyGuard } from './auth/guards/api-key.guard';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -38,6 +37,7 @@ import { ApiKeyGuard } from './auth/guards/api-key.guard';
     UsersModule,
     ProductsModule,
     DatabaseModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
