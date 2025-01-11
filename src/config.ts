@@ -27,6 +27,7 @@ export default registerAs('config', () => {
       migrationsDir: process.env.TYPEORM_MIGRATIONS_DIR,
       migrationsTableName: process.env.TYPEORM_MIGRATIONS_TABLE_NAME,
     },
-    key: process.env.API_KEY,
+    apiKey: process.env.API_KEY,
+    jwtSecret: process.env.JWT_SECRET,
   };
 });

@@ -31,6 +31,7 @@ import { AuthModule } from './auth/auth.module';
         TYPEORM_MIGRATIONS: Joi.string().required(),
         TYPEORM_MIGRATIONS_TABLE_NAME: Joi.string().required(),
         API_KEY: Joi.string().required(),
+        JWT_SECRET: Joi.string().required(),
       }),
     }),
     HttpModule,
